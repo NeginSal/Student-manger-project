@@ -17,10 +17,12 @@
 
 <script>
 import axios from "axios";
+import store from '../store'
 
 export default {
     data() {
         return {
+          students: store.state.students
         }
     },
   async created() {
