@@ -8,6 +8,7 @@ export default new Vuex.Store({
         students: []
     },
     getters: {
-        students: state => state.students.map(s => ({ ...s, fullName: s.firstName + ' ' + s.lastName }))
+        students: state => state.students.map(s => ({ ...s, fullName: s.firstName + ' ' + s.lastName })),
+        findStudent: state => id => state.students.find(s => s.id == id)
     }
 })
