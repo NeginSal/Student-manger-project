@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="$store.getters.isLoaded">
     <v-flex sm8 offset-sm2>
       <v-card>
         <v-toolbar dark>
