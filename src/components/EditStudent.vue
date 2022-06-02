@@ -1,16 +1,33 @@
 <template>
-  <div v-if="$store.getters.isLoaded">
+  <div>
     <v-flex sm8 offset-sm2>
       <v-card>
         <v-toolbar dark>
           <v-toolbar-title>Edit Student</v-toolbar-title>
         </v-toolbar>
-        <v-form>
+        <v-container class="text-xs-center">
+          <v-progress-circular
+            v-if="!$store.getters.isLoaded"
+            :size="70"
+            :width="7"
+            color="purple"
+            indeterminate
+          ></v-progress-circular>
+        </v-container>
+        <v-form v-if="$store.getters.isLoaded">
           <v-container>
             <v-layout>
               <v-flex xs12 md4>
-                <v-text-field v-model="firstName" label="first Name" required></v-text-field>
-                <v-text-field v-model="lastName" label="last Name" required></v-text-field>
+                <v-text-field
+                  v-model="firstName"
+                  label="first Name"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="lastName"
+                  label="last Name"
+                  required
+                ></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
@@ -18,8 +35,8 @@
         </v-form>
       </v-card>
     </v-flex>
-    <br>
-    <Students/>
+    <br />
+    <Students />
   </div>
 </template>
 
@@ -30,19 +47,22 @@ import Students from "./Students";
 export default {
   data() {
     return {
-      student: ""
+      student: "",
     };
   },
-   created() {
-      this.student = this.$store.getters.findStudent(this.$route.params.id);
+  created() {
+    this.student = this.$store.getters.findStudent(this.$route.params.id);
   },
   methods: {
     async submit() {
-      axios.put(`http://localhost:3000/students/${this.$route.params.id}`, { firstName: this.student.firstName, lastName:this.student.lastName });
-    }
+      axios.put(`http://localhost:3000/students/${this.$route.params.id}`, {
+        firstName: this.student.firstName,
+        lastName: this.student.lastName,
+      });
+    },
   },
   components: {
-      Students
-  }
+    Students,
+  },
 };
 </script>
