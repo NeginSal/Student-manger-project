@@ -7,24 +7,24 @@
         </v-toolbar>
         <v-container class="text-xs-center">
           <v-progress-circular
-            v-if="!$store.getters.isLoaded"
+            v-if="!isLoaded"
             :size="70"
             :width="7"
             color="purple"
             indeterminate
           ></v-progress-circular>
         </v-container>
-        <v-form v-if="$store.getters.isLoaded">
+        <v-form v-if="isLoaded">
           <v-container>
             <v-layout>
               <v-flex xs12 md4>
                 <v-text-field
-                  v-model="firstName"
+                  v-model="findStudent($route.params.id).firstName"
                   label="first Name"
                   required
                 ></v-text-field>
                 <v-text-field
-                  v-model="lastName"
+                  v-model="findStudent($route.params.id).lastName"
                   label="last Name"
                   required
                 ></v-text-field>
@@ -43,23 +43,25 @@
 <script>
 import axios from "axios";
 import Students from "./Students";
+import { mapGetters } from "vuex";
 
 export default {
   data() {
-    return {
-      student: "",
-    };
+    return {};
   },
-  created() {
-    this.student = this.$store.getters.findStudent(this.$route.params.id);
+  computed: {
+    // student() {
+    //   return this.$store.getters.findStudent(this.$route.params.id);
+    // },
+    ...mapGetters(['isLoaded','findStudent'])
   },
   methods: {
     async submit() {
       axios.put(`http://localhost:3000/students/${this.$route.params.id}`, {
         firstName: this.student.firstName,
-        lastName: this.student.lastName,
+        lastName: this.student.lastName
       });
-    },
+    }
   },
   components: {
     Students,
