@@ -31,7 +31,8 @@ export default {
     };
   },
   async created() {
-      store.state.students = (await axios.get('http://localhost:3000/students')).data;
+    let students = (await axios.get('http://localhost:3000/students')).data;
+      this.$store.commit('setStudents',students)
   }
 };
 </script>

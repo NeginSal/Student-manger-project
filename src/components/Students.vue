@@ -37,7 +37,7 @@ export default {
     return {};
   },
   computed: mapState({
-    students: (state) => state.students,
+    students: state => state.students
   }),
   async created() {},
 };
