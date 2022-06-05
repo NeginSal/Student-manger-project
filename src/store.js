@@ -10,11 +10,14 @@ export default new Vuex.Store({
     getters: {
         students: state => state.students.map(s => ({ ...s, fullName: s.firstName + ' ' + s.lastName })),
         findStudent: state => id => state.students.find(s => s.id == id),
-        isLoaded: state=> !!state.students
+        isLoaded: state => !!state.students
     },
-    mutations:{
-        setStudents(state,students){
-            state.students=students;
+    mutations: {
+        setStudents(state, students) {
+            state.students = students;
+        },
+        addStudents(state, student) {
+            state.students.push(student);
         }
     }
 })

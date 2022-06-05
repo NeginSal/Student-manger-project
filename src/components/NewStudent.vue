@@ -36,7 +36,8 @@ export default {
   },
   methods: {
     async submit() {
-      axios.post("http://localhost:3000/students", { firstName: this.firstName, lastName: this.lastName });
+      const student =(await axios.post("http://localhost:3000/students", { firstName: this.firstName, lastName: this.lastName })).data;
+      this.$store.commit('addStudent',student);
     }
   },
   components: {
