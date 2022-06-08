@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,12 @@ export default new Vuex.Store({
         },
         addStudents(state, student) {
             state.students.push(student);
+        }
+    },
+    action:{
+        async getStudents(context){
+          let students = (await axios.get('http://localhost:3000/students')).data;
+          context.commit('setStudents',students)
         }
     }
 })
