@@ -37,13 +37,14 @@ export default {
   },
   methods: {
     async submit() {
-      const student =(await axios.post("http://localhost:3000/students", { firstName: this.firstName, lastName: this.lastName })).data;
+      this.$store.dispatch('createStudent',{firstName:this.firstName,lastName:this.lastName})
+      // const student =(await axios.post("http://localhost:3000/students", { firstName: this.firstName, lastName: this.lastName })).data;
       //this.$store.commit('addStudent',student);
-      this.addStudent('student');
+      // this.addStudent('student');
     },
-    ...mapMutations([
-      'addStudent'
-    ])
+    // ...mapMutations([
+    //   'addStudent'
+    // ])
   },
   components: {
       Students
