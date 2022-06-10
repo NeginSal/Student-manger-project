@@ -29,6 +29,9 @@ export default new Vuex.Store({
         async addStudents(context,{firstName,lastName}) {
             const student = (await axios.post("http://localhost:3000/students", { firstName, lastName })).data;
             context.commit('addStudents', student);
+        },
+        async editStudents(context,{id,names}){
+            axios.put(`http://localhost:3000/students/${id}`, names);
         }
     }
 })

@@ -57,10 +57,11 @@ export default {
   },
   methods: {
     async submit() {
-      axios.put(`http://localhost:3000/students/${this.$route.params.id}`, {
-        firstName: this.student.firstName,
-        lastName: this.student.lastName
-      });
+      const firstName =this.findStudent(this.$route.params.id).firstName;
+       const lasttName =this.findStudent(this.$route.params.id).lastName;
+
+      this.$store.dispatch('editStudent',{id:this.$route.params.id,names:{firstName,lasttName}})
+
     }
   },
   components: {
