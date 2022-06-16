@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios";
+import { convertCSS } from 'stylus';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        students: []
+        students: [],
+        showError: false,
+        errorText: 'Error'
     },
     getters: {
         students: state => state.students.map(s => ({ ...s, fullName: s.firstName + ' ' + s.lastName })),
@@ -23,21 +26,31 @@ export default new Vuex.Store({
         editStudents(state, student) {
             const index = state.students.findIndex(s => s.id == student.id);
             // state.students[index] = student;
-            Vue.set(state.students,index,student)
+            Vue.set(state.students, index, student)
+        },
+        showError(state, message) {
+            state.showError = true;
+            state.errorText = message;
         }
     },
     action: {
         async getStudents(context) {
-            const students = (await axios.get('http://localhost:3000/students')).data;
-            context.commit('setStudents', students);
+            try {
+                const students = (await axios.get('http://localhost:3000/students')).data;
+                context.commit('setStudents', students);
+            }catch (error) {
+                context.commit('showError', error)
+
+            }
         },
+
         async addStudents(context, { firstName, lastName }) {
             const student = (await axios.post("http://localhost:3000/students", { firstName, lastName })).data;
             context.commit('addStudents', student);
         },
         async editStudents(context, { id, names }) {
             const student = await (axios.put(`http://localhost:3000/students/${id}`, names)).data;
-            context.commit('editStudents',student)
+            context.commit('editStudents', student)
         }
     }
 })

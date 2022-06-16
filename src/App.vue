@@ -8,6 +8,9 @@
       <br>
       <router-view />
     </v-content>
+    <v-snackbar v-model="$store.state.showError">
+      {{$store.state.errorText}}
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -26,7 +29,7 @@ export default {
   },
   data() {
     return {
-      //
+
     };
   },
   async created() {
