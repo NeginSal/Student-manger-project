@@ -8,8 +8,8 @@
       <br>
       <router-view />
     </v-content>
-    <v-snackbar v-model="$store.state.showError">
-      {{$store.state.errorText}}
+    <v-snackbar v-model="$store.state.error.show">
+      {{$store.state.error.Text}}
     </v-snackbar>
   </v-app>
 </template>
